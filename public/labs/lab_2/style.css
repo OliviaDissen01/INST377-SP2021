@@ -14,19 +14,30 @@ body {
   width: 70%;
   min-width: 800px;
   margin: 0 auto;
-  background-color: #6091C3;
+  background-color: #1971c9;
 }
+.page {
+  width: 600px;
+  margin: 0 auto;
+}
+#Lab-2 {
+  color : #5D6063;
+}
+.page s {
+  color: red;
 
+}
 /* || typography */
 
 h1, h2, h3 {
-  font-family: 'Cinzel Decorative', cursive;
+  font-family: 'Gruppo', cursive;
   color: #2a2a2a;
 }
 
 p, input, li {
   font-family: 'Roboto Condensed', sans-serif;
   color: #2a2a2a;
+  
 }
 
 h1 {
@@ -65,7 +76,7 @@ body > * {
 }
 
 .main, .header, nav, .article, .aside, .footer, section {
-  background-color: rgba(0,255,0,0.5);
+  background-color: rgba(111, 168, 233, 0.5);
   padding: 1%;
 }
 
