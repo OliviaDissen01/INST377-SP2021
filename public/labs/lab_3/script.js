@@ -1,40 +1,69 @@
-function supernova_slider() {
-    let nextBtn = document.querySelector(".gallery .buttons .next"),
-        prevBtn = document.querySelector(".gallery .buttons .prev"),
-        slide = document.querySelectorAll(".gallery .photos .block"),
-        i = 0;
+const carouselContainer = document.querySelector('.carousel-container');
+const listImageArea = carouselContainer.querySelector('.next-list"');
+const listOfImages = listImageArea.querySelectorAll('img');
+const currentImage = carouselContainer.querySelector('.current-image');
+const arrowLeft = carouselContainer.querySelector('.arrow-left');
+const arrowRight = carouselContainer.querySelector('.arrow-right');
 
-    prevBtn.onclick = (event) => {
-        event.preventDefault();
-
-        slide[i].classList.remove("active");
-        i--;
-
-        if (i < 0) {
-            i = slide.length - 1;
-        }
-        slide[i].classList.add("active");
-    };
-
-    nextBtn.onclick = (event) => {
-        event.preventDefault();
-
-        slide[i].classList.remove("active");
-        i++;
-
-        if (i >= slide.length) {
-            i = 0;
-        }
-
-        slide[i].classList.add("active");
-    };
-
-    slider_callback();
-    let sliderInterval = window.setInterval(slider_callback, 3000);
-
-    function slider_callback() {
-        nextBtn.click();
-    }
+function styleList() {
+  if (listImageArea.scrollWidth === listImageArea.offsetWidth) {
+    listImageArea.style.justifyContent = 'center';
+  } else {
+    listImageArea.style.justifyContent = 'flex-start';
+  }
 }
 
-supernova_slider();
+function goToRight() {
+  let current = listImageArea.querySelector('.current-image-list');
+  current.parentElement.nextElementSibling.children[0].classList.add(
+    'current-image-list'
+  );
+  current.classList.remove('current-image-list');
+  current = listImageArea.querySelector('.current-image-list');
+  listImageArea.scrollLeft = current.offsetLeft;
+  currentImage.attributes.src.value = current.attributes.src.value;
+  currentImage.classList.add('slideInFromRight');
+  setTimeout(() => {
+    currentImage.classList.remove('slideInFromRight');
+  }, 500);
+}
+
+function goToLeft() {
+  let current = listImageArea.querySelector('.current-image-list');
+  current.parentElement.previousElementSibling.children[0].classList.add(
+    'current-image-list'
+  );
+  current.classList.remove('current-image-list');
+  current = listImageArea.querySelector('.current-image-list');
+  listImageArea.scrollLeft = current.offsetLeft;
+  currentImage.attributes.src.value = current.attributes.src.value;
+  currentImage.classList.add('slideInFromLeft');
+  setTimeout(() => {
+    currentImage.classList.remove('slideInFromLeft');
+  }, 500);
+}
+
+function changeCurrentImage(newImage) {
+  currentImage.classList.add('fadeIn');
+  setTimeout(() => {
+    currentImage.classList.remove('fadeIn');
+  }, 500);
+  currentImage.attributes.src.value = this.attributes.src.value;
+  listOfImages.forEach((image) => {
+    image.classList.remove('current-image-list');
+  });
+  this.classList.add('current-image-list');
+}
+
+styleList();
+
+arrowLeft.addEventListener('click', goToLeft);
+arrowRight.addEventListener('click', goToRight);
+
+window.addEventListener('resize', (e) => {
+  styleList();
+});
+
+listOfImages.forEach((image) => {
+  image.addEventListener('click', changeCurrentImage);
+});
