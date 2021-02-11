@@ -1,69 +1,28 @@
-const carouselContainer = document.querySelector('.carousel-container');
-const listImageArea = carouselContainer.querySelector('.next-list"');
-const listOfImages = listImageArea.querySelectorAll('img');
-const currentImage = carouselContainer.querySelector('.current-image');
-const arrowLeft = carouselContainer.querySelector('.arrow-left');
-const arrowRight = carouselContainer.querySelector('.arrow-right');
+/* eslint-disable no-plusplus */
+const slideArray = [];
+for (let i = 0; i < document.querySelectorAll('.slider div').length; i++) {
+  slideArray.push(document.querySelectorAll('.slider div')[i].dataset.background);
+}
 
-function styleList() {
-  if (listImageArea.scrollWidth === listImageArea.offsetWidth) {
-    listImageArea.style.justifyContent = 'center';
-  } else {
-    listImageArea.style.justifyContent = 'flex-start';
+let currentSlideIndex = -1;
+
+function advanceSliderItem() {
+  currentSlideIndex++;
+
+  if (currentSlideIndex >= slideArray.length) {
+    currentSlideIndex = 0;
   }
+
+  document.querySelector('.slider').style.cssText = `background: url("${slideArray[currentSlideIndex]}") no-repeat center center; background-size: cover;`;
+
+  const elems = document.getElementsByClassName('caption');
+  for (let i = 0; i < elems.length; i++) {
+    elems[i].style.cssText = 'opacity: 0;';
+  }
+
+  const currentCaption = document.querySelector(`.caption-${currentSlideIndex}`);
+  currentCaption.style.cssText = 'opacity: 1;';
 }
 
-function goToRight() {
-  let current = listImageArea.querySelector('.current-image-list');
-  current.parentElement.nextElementSibling.children[0].classList.add(
-    'current-image-list'
-  );
-  current.classList.remove('current-image-list');
-  current = listImageArea.querySelector('.current-image-list');
-  listImageArea.scrollLeft = current.offsetLeft;
-  currentImage.attributes.src.value = current.attributes.src.value;
-  currentImage.classList.add('slideInFromRight');
-  setTimeout(() => {
-    currentImage.classList.remove('slideInFromRight');
-  }, 500);
-}
-
-function goToLeft() {
-  let current = listImageArea.querySelector('.current-image-list');
-  current.parentElement.previousElementSibling.children[0].classList.add(
-    'current-image-list'
-  );
-  current.classList.remove('current-image-list');
-  current = listImageArea.querySelector('.current-image-list');
-  listImageArea.scrollLeft = current.offsetLeft;
-  currentImage.attributes.src.value = current.attributes.src.value;
-  currentImage.classList.add('slideInFromLeft');
-  setTimeout(() => {
-    currentImage.classList.remove('slideInFromLeft');
-  }, 500);
-}
-
-function changeCurrentImage() {
-  currentImage.classList.add('fadeIn');
-  setTimeout(() => {
-    currentImage.classList.remove('fadeIn');
-  }, 500);
-  currentImage.attributes.src.value = this.attributes.src.value;
-  listOfImages.forEach((image) => {
-    image.classList.remove('current-image-list');
-  });
-  this.classList.add('current-image-list');
-}
-
-styleList();
-
-arrowLeft.addEventListener('click', goToLeft);
-arrowRight.addEventListener('click', goToRight);
-
-window.addEventListener('resize', () => {
-  styleList();
-});
-
-listOfImages.forEach((image) => {
-  image.addEventListener('click', changeCurrentImage);
-});
+// eslint-disable-next-line no-unused-vars
+const intervalID = setInterval(advanceSliderItem, 3000);
