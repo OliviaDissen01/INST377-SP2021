@@ -43,7 +43,7 @@ function goToLeft() {
   }, 500);
 }
 
-function changeCurrentImage(newImage) {
+function changeCurrentImage() {
   currentImage.classList.add('fadeIn');
   setTimeout(() => {
     currentImage.classList.remove('fadeIn');
@@ -60,7 +60,7 @@ styleList();
 arrowLeft.addEventListener('click', goToLeft);
 arrowRight.addEventListener('click', goToRight);
 
-window.addEventListener('resize', (e) => {
+window.addEventListener('resize', () => {
   styleList();
 });
 
