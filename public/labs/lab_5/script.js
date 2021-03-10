@@ -1,4 +1,4 @@
-let restaurantList = [];
+let restaurantList = []
 const searchInput = document.querySelector('.search');
 // eslint-disable-next-line no-use-before-define
 searchInput.addEventListener('change', displayMatches);
@@ -15,24 +15,27 @@ function mapInit() {
     zoomOffset: -1,
     accessToken: 'your.mapbox.access.token'
   }).addTo(mymap);
-  // follow the Leaflet Getting Started tutorial here
+
   return map;
 }
 
-// eslint-disable-next-line no-unused-vars
 async function dataHandler(mapObjectFromFunction) {
   const data = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json');
   const json = await data.json();
-  restaurantList = json;
+  restaurantList = json
 }
-window.onload = getData;
+window.onload = getData
+
+// here we need to figure out if the restaurant matches what was searched
 function findMatches(word) {
-  return restaurantList.filter((restaurant) => restaurant.name.toLowerCase().indexOf(word) > -1);
+  // eslint-disable-next-line arrow-parens
+  return restaurantList.filter(restaurant => restaurant.name.toLowerCase().indexOf(word) > -1);
 }
 
 function displayMatches() {
   const matchArray = findMatches(searchInput.value);
-  document.querySelector('.suggestions').innerHTML = matchArray.map((restaurant) => `<li class="">
+  // eslint-disable-next-line arrow-parens
+  document.querySelector('.suggestions').innerHTML = matchArray.map(restaurant => `<li class="">
             <div class="name">${restaurant.name}</div>
             <div class="text">${restaurant.category}</div>
             <div class="text italic">${restaurant.address_line_1}</div>
@@ -40,8 +43,6 @@ function displayMatches() {
             <div class="text italic">${restaurant.zip}</div>
           </li>`).join('');
 }
-searchInput.addEventListener('', []);
-
 async function windowActions() {
   const map = mapInit();
   await dataHandler(map);
