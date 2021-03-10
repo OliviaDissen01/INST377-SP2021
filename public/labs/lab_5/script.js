@@ -1,4 +1,4 @@
-let restaurantList = []
+let restaurantList = [];
 const searchInput = document.querySelector('.search');
 // eslint-disable-next-line no-use-before-define
 searchInput.addEventListener('change', displayMatches);
@@ -19,12 +19,13 @@ function mapInit() {
   return map;
 }
 
+// eslint-disable-next-line no-unused-vars
 async function dataHandler(mapObjectFromFunction) {
   const data = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json');
   const json = await data.json();
-  restaurantList = json
+  restaurantList = json;
 }
-window.onload = getData
+window.onload = getData;
 function findMatches(word) {
   return restaurantList.filter((restaurant) => restaurant.name.toLowerCase().indexOf(word) > -1);
 }
